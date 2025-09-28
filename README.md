@@ -16,7 +16,7 @@ A modern, AI-powered financial assistance application built with React.js and Ty
 - **Notifications**: React Hot Toast
 - **Country Selection**: React Select with country list
 - **Accessibility**: WCAG compliant with ARIA roles
-- **Testing**: Jest & Testing Library
+- **Testing**: Vitest & React Testing Library
 - **Linting**: ESLint with TypeScript rules
 - **Git Hooks**: Husky for pre-commit validation
 
@@ -28,25 +28,31 @@ social-support-app/
 ├── src/
 │   ├── components/         # Reusable UI components
 │   │   ├── stepper/        # Multi-step form components
+│   │   │   ├── Stepper.tsx # Progress indicator component
+│   │   │   ├── StepperLayout.tsx # Step layout wrapper
+│   │   │   ├── stepperConfig.ts # Step configuration
+│   │   │   └── __tests__/  # Stepper component tests
+│   │   ├── __tests__/      # Component test files
 │   │   ├── Button.tsx      # Custom button component
 │   │   ├── Input.tsx       # Form input component
-│   │   ├── Select.tsx      # Form select component
+│   │   ├── Select.tsx      # React-select wrapper component
 │   │   ├── Textarea.tsx    # Form textarea component
 │   │   ├── CountrySelect.tsx # Country dropdown component
 │   │   ├── HelpMeWriteButton.tsx # AI assistance button
-│   │   ├── AISuggestionModal.tsx # AI suggestion popup
-│   │   └── SaveContinueLaterButton.tsx # Save functionality
+│   │   └── AISuggestionModal.tsx # AI suggestion popup
 │   ├── pages/             # Page components
 │   │   ├── Home.tsx       # Landing page
 │   │   ├── Success.tsx    # Application success page
 │   │   └── steps/         # Form step components
 │   │       ├── PersonalInformation.tsx
 │   │       ├── FamilyFinancialInfo.tsx
-│   │       └── SituationDescriptions.tsx
+│   │       ├── SituationDescriptions.tsx
+│   │       └── __tests__/ # Step component tests
 │   ├── layout/            # Layout components
 │   │   ├── Header.tsx     # Application header
 │   │   ├── Footer.tsx     # Application footer
-│   │   └── Layout.tsx     # Main layout wrapper
+│   │   ├── Layout.tsx     # Main layout wrapper
+│   │   └── __tests__/     # Layout component tests
 │   ├── services/          # API services and utilities
 │   │   └── openai.ts      # OpenAI API integration
 │   ├── store/             # Redux store and slices
@@ -59,7 +65,8 @@ social-support-app/
 │   │   ├── familyFinancialInfo.ts
 │   │   └── situationDescriptions.ts
 │   ├── contexts/          # React contexts
-│   │   └── StepValidationContext.tsx
+│   │   ├── StepValidationContext.tsx
+│   │   └── __tests__/     # Context test files
 │   ├── constants/         # Application constants
 │   │   └── paths.ts       # Route constants
 │   ├── i18n/              # Internationalization
@@ -69,13 +76,18 @@ social-support-app/
 │   │       └── ar.json    # Arabic translations
 │   ├── types/             # TypeScript type definitions
 │   ├── utils/             # Utility functions
-│   │   └── cn.ts          # Class name utility
+│   │   ├── cn.ts          # Class name utility
+│   │   ├── localStorage.ts # Local storage utilities
+│   │   └── toast.ts       # Toast notification system
+│   ├── test/              # Test configuration
+│   │   └── setup.ts       # Vitest setup file
 │   └── vite-env.d.ts      # Vite environment types
 ├── .husky/                # Git hooks
 ├── package.json
 ├── tsconfig.json
 ├── tailwind.config.js
 ├── vite.config.ts
+├── vitest.config.ts       # Vitest configuration
 ├── .env.example           # Environment variables template
 └── README.md
 ```
@@ -110,9 +122,10 @@ social-support-app/
 - `npm run build` - Build for production
 - `npm run preview` - Preview production build
 - `npm run lint` - Run ESLint
-- `npm test` - Run tests
+- `npm test` - Run tests with Vitest
 - `npm run test:watch` - Run tests in watch mode
-- `npm run test:coverage` - Run tests with coverage
+- `npm run test:coverage` - Run tests with coverage report
+- `npm run test:ui` - Run tests with Vitest UI
 
 ## 🌍 Environment Variables
 
@@ -121,7 +134,8 @@ Create a `.env` file in the root directory with the following variables:
 ```env
 # OpenAI Configuration (Optional - app works with mock responses if not provided)
 VITE_OPENAI_API_KEY=your_openai_api_key_here
-
+VITE_OPENAI_MAX_TOKENS=250       
+VITE_OPENAI_MODEL=gpt-3.5-turb
 # App Configuration
 VITE_APP_NAME=Social Support Portal
 VITE_APP_VERSION=1.0.0
@@ -206,8 +220,25 @@ src/i18n/locales/
 
 ## 🧪 Testing
 
-The project is configured with Jest and Testing Library for unit and integration testing.
+The project uses **Vitest** and **React Testing Library** for comprehensive testing with excellent performance and modern features.
 
+### Test Coverage
+- **407+ tests** covering all components and functionality
+- **Unit tests** for individual components and utilities
+- **Integration tests** for complex user flows
+- **Accessibility tests** for WCAG compliance
+- **Internationalization tests** for multi-language support
+
+### Key Test Suites
+- **Component Tests**: Button, Input, Select, Textarea, CountrySelect
+- **Stepper Tests**: 42 comprehensive tests for the progress indicator
+- **Form Tests**: PersonalInformation, FamilyFinancialInfo, SituationDescriptions
+- **Layout Tests**: Header, Footer, Layout components
+- **Context Tests**: StepValidationContext with 16 test scenarios
+- **Page Tests**: Home, Success, NotFound pages
+- **Utility Tests**: localStorage, toast notifications
+
+### Running Tests
 ```bash
 # Run all tests
 npm test
@@ -217,7 +248,23 @@ npm run test:watch
 
 # Generate coverage report
 npm run test:coverage
+
+# Run tests with UI (interactive)
+npm run test:ui
+
+# Run specific test file
+npm test -- Button.test.tsx
+
+# Run tests for a specific component
+npm test src/components/__tests__/
 ```
+
+### Test Configuration
+- **Framework**: Vitest with jsdom environment
+- **Testing Library**: React Testing Library for component testing
+- **Coverage**: V8 provider with HTML, JSON, and text reports
+- **Mocking**: Comprehensive mocking of external dependencies
+- **Setup**: Automated test setup with jest-dom matchers
 
 ## 📦 Building for Production
 
@@ -255,19 +302,40 @@ const response = await generateAISuggestion({
 
 ```mermaid
 graph TD
+   flowchart TD
     A[Home Page] --> B[Start Application]
     B --> C[Step 1: Personal Information]
-    C --> D[Step 2: Family & Financial Info]
-    D --> E[Step 3: Situation Descriptions]
-    E --> F[AI Writing Assistant]
-    F --> G[Form Validation]
-    G --> H[Success Page]
-    H --> I[Download Receipt]
     
-    C --> J[Save & Continue Later]
-    D --> J
-    E --> J
-    J --> A
+    C --> G{Form Validation}
+    G -->|Success| D[Step 2: Family & Financial Info]
+    G -->|Error| C
+    
+    D --> H{Form Validation}
+    H -->|Success| E[Step 3: Situation Descriptions]
+    H -->|Error| D
+    
+    E --> I{Form Validation}
+    I -->|Success| F[AI Writing Assistant]
+    I -->|Error| E
+    
+    F --> J{Review & Submit}
+    J -->|Needs Revision| E
+    J -->|Approved| K[Success Page]
+    
+    C --> L[Save & Continue Later]
+    D --> L
+    E --> L
+    L --> M[Application Saved]
+    M --> A
+    
+    K --> N[Download Receipt]
+    K --> O[Email Confirmation]
+    K --> P[Track Application Status]
+    
+    style A fill:#e1f5fe
+    style K fill:#e8f5e8
+    style F fill:#f3e5f5
+    style L fill:#fff3e0
 ```
 
 ## 🎯 Key Components
@@ -286,7 +354,8 @@ graph TD
 ### Layout Components
 - **Header**: Navigation with language toggle
 - **Footer**: Contact information and links
-- **Stepper**: Multi-step progress indicator
+- **Stepper**: Multi-step progress indicator with 42 comprehensive tests
+- **StepperLayout**: Step wrapper with navigation controls
 - **Layout**: Main application wrapper
 
 ## 🔒 Security & Privacy
@@ -305,16 +374,38 @@ graph TD
 
 ## 🧪 Testing Strategy
 
+### Component Testing Approach
 ```bash
-# Unit Tests
-npm test -- Input.test.tsx
+# Test individual UI components
+npm test src/components/__tests__/
 
-# Integration Tests  
-npm test -- PersonalInformation.test.tsx
+# Test form step components
+npm test src/pages/steps/__tests__/
 
-# E2E Tests (if implemented)
-npm run test:e2e
+# Test layout components
+npm test src/layout/__tests__/
+
+# Test contexts and utilities
+npm test src/contexts/__tests__/
+npm test src/utils/__tests__/
 ```
+
+### Stepper Component Testing Highlights
+The **Stepper component** has 42 comprehensive tests covering:
+- **Basic Rendering**: Navigation roles, step display, custom classes
+- **Progress Calculation**: Accurate progress bar width calculations
+- **Step States**: Completed, current, and upcoming step styling
+- **Accessibility**: ARIA labels, screen reader support, keyboard navigation
+- **Responsive Design**: Mobile vs desktop layouts, hidden elements
+- **Internationalization**: RTL support, translation integration
+- **Edge Cases**: Single steps, empty arrays, boundary conditions
+
+### Test Quality Standards
+- **Accessibility First**: Every component tested for WCAG compliance
+- **Mobile Responsive**: Tests verify mobile and desktop behavior
+- **Internationalization**: Tests cover English and Arabic (RTL) layouts
+- **Error Handling**: Comprehensive error state and edge case testing
+- **Performance**: Tests ensure efficient rendering and state management
 
 ## 📱 Browser Support
 
@@ -331,6 +422,9 @@ npm run test:e2e
 - **Zod** for runtime type validation
 - **Redux Toolkit** for state management
 - **React Hook Form** for form handling
+- **Vitest** for fast and modern testing framework
+- **React Testing Library** for accessible testing utilities
+- **React Select** for enhanced select components
 - **All contributors and maintainers**
 
 ---

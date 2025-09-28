@@ -1,2 +1,10 @@
-npm run lint
-npm test -- --passWithNoTests
+#!/usr/bin/env sh
+. "$(dirname "$0")/_/husky.sh"
+
+echo "🧪 Running linter..."
+npm run lint || exit 1
+
+echo "🧪 Running tests..."
+npm test -- --passWithNoTests || exit 1
+
+echo "✅ All checks passed! Proceeding with commit..."
