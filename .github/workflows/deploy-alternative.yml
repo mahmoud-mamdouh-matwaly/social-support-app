@@ -1,56 +1,35 @@
-# Alternative deployment workflow - use this if the main one fails
-name: Deploy to GitHub Pages (Alternative)
+name: Build and Deploy
 
 on:
-    workflow_dispatch: # Manual trigger
-    push:
-        branches: [main]
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
 
 jobs:
-    build-and-deploy:
-        runs-on: ubuntu-latest
+  build:
+    runs-on: ubuntu-latest
 
-        steps:
-            - name: Checkout
-              uses: actions/checkout@v4
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: "18"
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "18"
+          cache: "npm" # Remove this line if no lock file
 
-            - name: Cache dependencies
-              uses: actions/cache@v3
-              with:
-                  path: ~/.npm
-                  key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
-                  restore-keys: |
-                      ${{ runner.os }}-node-
+      - name: Install dependencies
+        run: npm install # Changed from npm ci
 
-            - name: Install dependencies
-              run: |
-                  if [ -f package-lock.json ]; then
-                    npm ci
-                  else
-                    npm install
-                  fi
+      - name: Build
+        run: npm run build
+        env:
+          VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
 
-            - name: Run linting (continue on error)
-              run: npm run lint || echo "Linting failed but continuing..."
-
-            - name: Run tests (continue on error)
-              run: npm test -- --passWithNoTests || echo "Tests failed but continuing..."
-
-            - name: Build application
-              run: npm run build
-              env:
-                  NODE_ENV: production
-                  VITE_APP_NAME: "Social Support Portal"
-                  VITE_APP_VERSION: "1.0.0"
-
-            - name: Deploy to GitHub Pages
-              uses: peaceiris/actions-gh-pages@v3
-              with:
-                  github_token: ${{ secrets.GITHUB_TOKEN }}
-                  publish_dir: ./dist
-                  force_orphan: true
+      - name: Upload build
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist
+          path: dist/
