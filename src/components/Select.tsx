@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
 import { useTranslation } from "react-i18next";
-import Select, { Props as ReactSelectProps, SingleValue, StylesConfig } from "react-select";
+import Select, { Props as ReactSelectProps, SelectInstance, SingleValue, StylesConfig } from "react-select";
 import { cn } from "../utils/cn";
 
 export type SelectOption = {
@@ -25,7 +25,7 @@ type SelectProps = Omit<ReactSelectProps<SelectOption, false>, "options" | "valu
   isClearable?: boolean;
 };
 
-const SelectComponent = forwardRef<HTMLDivElement, SelectProps>(
+const SelectComponent = forwardRef<SelectInstance<SelectOption, false>, SelectProps>(
   (
     {
       label,

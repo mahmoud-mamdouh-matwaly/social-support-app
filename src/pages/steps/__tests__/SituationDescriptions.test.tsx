@@ -3,7 +3,7 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
-import { beforeEach, describe, expect, it, vi } from "vitest";
+import { beforeEach, describe, expect, it, vi, type MockedFunction } from "vitest";
 import { StepValidationProvider } from "../../../contexts/StepValidationContext";
 import applicationSlice from "../../../store/slices/applicationSlice";
 import SituationDescriptions from "../SituationDescriptions";
@@ -471,7 +471,7 @@ describe("SituationDescriptions Component", () => {
     const { generateAISuggestion } = await import("../../../services/openai");
 
     // Mock successful AI response
-    (generateAISuggestion as jest.MockedFunction<typeof generateAISuggestion>).mockResolvedValue({
+    (generateAISuggestion as MockedFunction<typeof generateAISuggestion>).mockResolvedValue({
       success: true,
       suggestion: "I am currently facing financial difficulties due to unexpected circumstances.",
     });
@@ -500,9 +500,10 @@ describe("SituationDescriptions Component", () => {
     const { generateAISuggestion } = await import("../../../services/openai");
 
     // Mock AI error response
-    (generateAISuggestion as jest.MockedFunction<typeof generateAISuggestion>).mockResolvedValue({
+    (generateAISuggestion as MockedFunction<typeof generateAISuggestion>).mockResolvedValue({
       success: false,
       error: "API rate limit exceeded",
+      suggestion: "",
     });
 
     renderWithProviders(<SituationDescriptions />);
@@ -521,7 +522,7 @@ describe("SituationDescriptions Component", () => {
     const { generateAISuggestion } = await import("../../../services/openai");
 
     // Mock network error
-    (generateAISuggestion as jest.MockedFunction<typeof generateAISuggestion>).mockRejectedValue(new Error("Network error"));
+    (generateAISuggestion as MockedFunction<typeof generateAISuggestion>).mockRejectedValue(new Error("Network error"));
 
     renderWithProviders(<SituationDescriptions />);
 
@@ -760,7 +761,7 @@ describe("SituationDescriptions Component", () => {
     const toast = await import("react-hot-toast");
 
     // Mock localStorage to throw an error
-    (saveApplicationToLocalStorage as jest.MockedFunction<typeof saveApplicationToLocalStorage>).mockImplementation(() => {
+    (saveApplicationToLocalStorage as MockedFunction<typeof saveApplicationToLocalStorage>).mockImplementation(() => {
       throw new Error("Storage error");
     });
 

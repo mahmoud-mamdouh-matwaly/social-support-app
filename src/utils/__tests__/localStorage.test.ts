@@ -156,7 +156,7 @@ describe("localStorage utilities", () => {
     it("can save and retrieve the same data", () => {
       // Mock successful storage and retrieval
       let storedValue: string;
-      localStorageMock.setItem.mockImplementation((key, value) => {
+      localStorageMock.setItem.mockImplementation((_key: string, value: string) => {
         storedValue = value;
       });
       localStorageMock.getItem.mockImplementation(() => storedValue);
@@ -174,7 +174,7 @@ describe("localStorage utilities", () => {
     it("handles complete workflow: save, retrieve, clear", () => {
       let storedValue: string | null = null;
 
-      localStorageMock.setItem.mockImplementation((key, value) => {
+      localStorageMock.setItem.mockImplementation((_key: string, value: string) => {
         storedValue = value;
       });
       localStorageMock.getItem.mockImplementation(() => storedValue);

@@ -105,10 +105,11 @@ const createMockStore = (initialState = {}) => {
           nationalId: "",
           dateOfBirth: "",
           gender: "",
-          phoneNumber: "",
+          phone: "",
           email: "",
           address: "",
           city: "",
+          state: "",
           country: "",
         },
         familyFinancialInfo: {

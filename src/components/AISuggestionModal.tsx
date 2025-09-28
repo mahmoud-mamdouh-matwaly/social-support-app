@@ -98,7 +98,7 @@ const AISuggestionModal = ({
         <div
           ref={modalRef}
           className={`
-            relative w-full max-w-2xl transform rounded-lg bg-white p-6 shadow-xl transition-all
+            relative w-full max-w-2xl transform rounded-lg bg-white p-6 shadow-xl transition-all overflow-hidden
             ${isRTL ? "text-right" : "text-left"}
           `}
           dir={isRTL ? "rtl" : "ltr"}
@@ -119,7 +119,7 @@ const AISuggestionModal = ({
           </div>
 
           {/* Content */}
-          <div className="mb-6">
+          <div className="mb-6 max-h-96 overflow-y-auto">
             {isLoading && (
               <div className="flex items-center justify-center py-8">
                 <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
@@ -128,8 +128,8 @@ const AISuggestionModal = ({
             )}
 
             {error && (
-              <div className="rounded-md bg-red-50 p-4 mb-4">
-                <div className="text-red-800">
+              <div className="rounded-md bg-red-50 p-4 mb-4" data-testid="modal-error">
+                <div className="text-red-800 break-words overflow-wrap-anywhere">
                   <strong>{t("aiSuggestion.error")}:</strong> {error}
                 </div>
               </div>
