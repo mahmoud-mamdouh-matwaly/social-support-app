@@ -5,6 +5,6 @@ echo "🧪 Running linter..."
 npm run lint || exit 1
 
 echo "🧪 Running tests..."
-npm test -- --passWithNoTests || exit 1
+npm test -- --run --passWithNoTests || exit 1
 
 echo "✅ All checks passed! Proceeding with commit..."
