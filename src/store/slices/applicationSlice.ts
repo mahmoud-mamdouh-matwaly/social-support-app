@@ -14,7 +14,11 @@ export type PersonalInformation = {
 };
 
 export type FamilyFinancialInfo = {
-  // Add family and financial fields later
+  maritalStatus: string;
+  dependents: string;
+  employmentStatus: string;
+  monthlyIncome: string;
+  housingStatus: string;
 };
 
 export type SituationDescriptions = {
@@ -42,7 +46,13 @@ const initialState: ApplicationState = {
     phone: "",
     email: "",
   },
-  familyFinancialInfo: {},
+  familyFinancialInfo: {
+    maritalStatus: "",
+    dependents: "",
+    employmentStatus: "",
+    monthlyIncome: "",
+    housingStatus: "",
+  },
   situationDescriptions: {},
   currentStep: 1,
   isSubmitting: false,

@@ -9,6 +9,18 @@
     "welcome": "مرحباً بكم في بوابة المساعدة المالية",
     "description": "تقدم بطلب للحصول على المساعدة المالية وتتبع حالة طلبك."
   },
+  "common": {
+    "actions": {
+      "saveAndContinueLater": "حفظ والمتابعة لاحقاً",
+      "unsavedChanges": "لديك تغييرات غير محفوظة"
+    },
+    "sections": {
+      "contactInformation": "معلومات الاتصال",
+      "familyInformation": "المعلومات العائلية",
+      "employmentInformation": "معلومات التوظيف",
+      "housingInformation": "معلومات السكن"
+    }
+  },
   "accessibility": {
     "skipToMain": "انتقل إلى المحتوى الرئيسي",
     "switchToArabic": "التبديل إلى العربية",
@@ -77,6 +89,74 @@
     }
   },
   "form": {
+    "familyFinancialInfo": {
+      "title": "معلومات الأسرة والمالية",
+      "subtitle": "يرجى تقديم معلومات حول وضعك الأسري والمالي",
+      "fields": {
+        "maritalStatus": {
+          "label": "الحالة الاجتماعية",
+          "placeholder": "اختر حالتك الاجتماعية",
+          "options": {
+            "single": "أعزب",
+            "married": "متزوج",
+            "divorced": "مطلق",
+            "widowed": "أرمل"
+          }
+        },
+        "dependents": {
+          "label": "عدد المعالين",
+          "placeholder": "أدخل عدد المعالين (مثل: 0، 1، 2...)"
+        },
+        "employmentStatus": {
+          "label": "حالة التوظيف",
+          "placeholder": "اختر حالة التوظيف الخاصة بك",
+          "options": {
+            "employed": "موظف",
+            "unemployed": "عاطل عن العمل",
+            "self-employed": "يعمل لحسابه الخاص",
+            "student": "طالب",
+            "retired": "متقاعد",
+            "disabled": "معاق"
+          }
+        },
+        "monthlyIncome": {
+          "label": "الدخل الشهري (درهم)",
+          "placeholder": "أدخل دخلك الشهري بالدرهم"
+        },
+        "housingStatus": {
+          "label": "حالة السكن",
+          "placeholder": "اختر حالة السكن الخاصة بك",
+          "options": {
+            "owned": "مملوك",
+            "rented": "مؤجر",
+            "family-owned": "مملوك للعائلة",
+            "government-provided": "مقدم من الحكومة",
+            "homeless": "بلا مأوى"
+          }
+        }
+      },
+      "validation": {
+        "maritalStatus": {
+          "required": "يرجى اختيار حالتك الاجتماعية"
+        },
+        "dependents": {
+          "required": "يرجى إدخال عدد المعالين",
+          "invalid": "يجب أن يكون عدد المعالين بين 0 و 20"
+        },
+        "employmentStatus": {
+          "required": "يرجى اختيار حالة التوظيف الخاصة بك"
+        },
+        "monthlyIncome": {
+          "required": "يرجى إدخال دخلك الشهري",
+          "invalid": "يجب أن يكون الدخل الشهري رقماً صحيحاً بين 0 و 1,000,000 درهم"
+        },
+        "housingStatus": {
+          "required": "يرجى اختيار حالة السكن الخاصة بك"
+        },
+        "formErrors": "يرجى إصلاح الأخطاء أدناه قبل المتابعة",
+        "saveSuccess": "تم حفظ معلومات الأسرة والمالية بنجاح"
+      }
+    },
     "personalInformation": {
       "title": "المعلومات الشخصية",
       "subtitle": "يرجى تقديم تفاصيلك الشخصية الأساسية",

@@ -9,6 +9,18 @@
     "welcome": "Welcome to the Financial Assistance Portal",
     "description": "Apply for financial assistance and track your application status."
   },
+  "common": {
+    "actions": {
+      "saveAndContinueLater": "Save & Continue Later",
+      "unsavedChanges": "You have unsaved changes"
+    },
+    "sections": {
+      "contactInformation": "Contact Information",
+      "familyInformation": "Family Information",
+      "employmentInformation": "Employment Information",
+      "housingInformation": "Housing Information"
+    }
+  },
   "accessibility": {
     "skipToMain": "Skip to main content",
     "switchToArabic": "Switch to Arabic",
@@ -77,6 +89,74 @@
     }
   },
   "form": {
+    "familyFinancialInfo": {
+      "title": "Family & Financial Information",
+      "subtitle": "Please provide information about your family and financial situation",
+      "fields": {
+        "maritalStatus": {
+          "label": "Marital Status",
+          "placeholder": "Select your marital status",
+          "options": {
+            "single": "Single",
+            "married": "Married",
+            "divorced": "Divorced",
+            "widowed": "Widowed"
+          }
+        },
+        "dependents": {
+          "label": "Number of Dependents",
+          "placeholder": "Enter number of dependents (e.g., 0, 1, 2...)"
+        },
+        "employmentStatus": {
+          "label": "Employment Status",
+          "placeholder": "Select your employment status",
+          "options": {
+            "employed": "Employed",
+            "unemployed": "Unemployed",
+            "self-employed": "Self-Employed",
+            "student": "Student",
+            "retired": "Retired",
+            "disabled": "Disabled"
+          }
+        },
+        "monthlyIncome": {
+          "label": "Monthly Income (AED)",
+          "placeholder": "Enter your monthly income in AED"
+        },
+        "housingStatus": {
+          "label": "Housing Status",
+          "placeholder": "Select your housing status",
+          "options": {
+            "owned": "Owned",
+            "rented": "Rented",
+            "family-owned": "Family Owned",
+            "government-provided": "Government Provided",
+            "homeless": "Homeless"
+          }
+        }
+      },
+      "validation": {
+        "maritalStatus": {
+          "required": "Please select your marital status"
+        },
+        "dependents": {
+          "required": "Please enter the number of dependents",
+          "invalid": "Number of dependents must be between 0 and 20"
+        },
+        "employmentStatus": {
+          "required": "Please select your employment status"
+        },
+        "monthlyIncome": {
+          "required": "Please enter your monthly income",
+          "invalid": "Monthly income must be a valid number between 0 and 1,000,000 AED"
+        },
+        "housingStatus": {
+          "required": "Please select your housing status"
+        },
+        "formErrors": "Please fix the errors below before continuing",
+        "saveSuccess": "Family & Financial information saved successfully"
+      }
+    },
     "personalInformation": {
       "title": "Personal Information",
       "subtitle": "Please provide your basic personal details",

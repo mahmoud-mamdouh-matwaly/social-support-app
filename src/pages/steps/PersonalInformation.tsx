@@ -1,13 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Save } from "lucide-react";
-import { useEffect } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
-import Button from "../../components/Button";
 import CountrySelect from "../../components/CountrySelect";
 import Input from "../../components/Input";
+import SaveContinueLaterButton from "../../components/SaveContinueLaterButton";
 import Select from "../../components/Select";
 import { PathConstants } from "../../constants/paths";
 import { useStepValidation } from "../../contexts/StepValidationContext";
@@ -26,18 +25,10 @@ const PersonalInformation = () => {
   const personalInfo = useAppSelector((state) => state.application.personalInformation);
   const isSubmitting = useAppSelector((state) => state.application.isSubmitting);
 
-  // Create schema with translated messages
-  const personalInformationSchema = createPersonalInformationSchema(t);
+  // Create schema with translated messages (recreated when language changes)
+  const personalInformationSchema = useMemo(() => createPersonalInformationSchema(t), [t]);
 
-  const {
-    register,
-    formState: { errors, isDirty },
-    reset,
-    watch,
-    trigger,
-    setValue,
-    getValues,
-  } = useForm<PersonalInformationFormData>({
+  const formMethods = useForm<PersonalInformationFormData>({
     resolver: zodResolver(personalInformationSchema),
     defaultValues: {
       name: personalInfo.name || "",
@@ -54,6 +45,16 @@ const PersonalInformation = () => {
     mode: "onSubmit", // Only validate on submit
   });
 
+  const {
+    register,
+    formState: { errors, isDirty },
+    reset,
+    watch,
+    trigger,
+    setValue,
+    getValues,
+  } = formMethods;
+
   // Reset form when Redux data changes
   useEffect(() => {
     reset({
@@ -69,6 +70,27 @@ const PersonalInformation = () => {
       email: personalInfo.email || "",
     });
   }, [personalInfo, reset]);
+
+  // Track previous language to detect changes
+  const prevLanguageRef = useRef(i18n.language);
+
+  // Update validation messages when language changes
+  useEffect(() => {
+    const currentLanguage = i18n.language;
+
+    // Only trigger if language actually changed and form has been interacted with
+    if (prevLanguageRef.current !== currentLanguage && isDirty) {
+      prevLanguageRef.current = currentLanguage;
+
+      // Clear errors first, then re-validate with new language
+      formMethods.clearErrors();
+      setTimeout(() => {
+        trigger();
+      }, 10); // Small delay to ensure errors are cleared
+    } else {
+      prevLanguageRef.current = currentLanguage;
+    }
+  }, [i18n.language, isDirty, formMethods, trigger]);
 
   // Register validation function with the context
   useEffect(() => {
@@ -261,7 +283,7 @@ const PersonalInformation = () => {
           {/* Contact Information */}
           <div className="space-y-6">
             <h3 className={`text-lg font-semibold text-gray-900 border-b pb-2 ${isRTL ? "text-right" : "text-left"}`}>
-              Contact Information
+              {t("common.sections.contactInformation")}
             </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -292,21 +314,14 @@ const PersonalInformation = () => {
 
           {/* Action Buttons */}
           <div className={`flex justify-center pt-6 border-t`}>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={handleSaveAndContinueLater}
-              icon={<Save />}
-              iconPosition={isRTL ? "right" : "left"}
-              disabled={isSubmitting}
-            >
-              Save & Continue Later
-            </Button>
+            <SaveContinueLaterButton onClick={handleSaveAndContinueLater} disabled={isSubmitting} />
           </div>
 
           {/* Form Status */}
           {isDirty && (
-            <div className={`text-sm text-amber-600 ${isRTL ? "text-right" : "text-left"}`}>You have unsaved changes</div>
+            <div className={`text-sm text-amber-600 ${isRTL ? "text-right" : "text-left"}`}>
+              {t("common.actions.unsavedChanges")}
+            </div>
           )}
         </div>
       </div>
