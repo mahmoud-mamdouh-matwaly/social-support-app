@@ -28,7 +28,6 @@ function App() {
         </Route>
       </Route>
 
-      {/* Success Page - Standalone */}
       <Route path={PathConstants.SUCCESS} element={<Success />} />
     </Routes>
   );
