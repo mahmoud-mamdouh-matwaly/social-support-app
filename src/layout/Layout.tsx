@@ -1,13 +1,9 @@
-import { ReactNode } from "react";
 import { useTranslation } from "react-i18next";
+import { Outlet } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
 
-interface LayoutProps {
-  children: ReactNode;
-}
-
-const Layout = ({ children }: LayoutProps) => {
+const Layout = () => {
   const { t, i18n } = useTranslation();
 
   return (
@@ -24,7 +20,7 @@ const Layout = ({ children }: LayoutProps) => {
         role="main"
         id="main-content"
       >
-        {children}
+        <Outlet />
       </main>
 
       <Footer />
