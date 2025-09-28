@@ -4,16 +4,16 @@ export type Size = "sm" | "md" | "lg";
 export type Variant = "primary" | "secondary" | "outline" | "ghost";
 
 // Button specific types
-export interface BaseButtonProps {
+export type BaseButtonProps = {
   size?: Size;
   variant?: Variant;
   loading?: boolean;
   loadingText?: string;
   fullWidth?: boolean;
-}
+};
 
 // Common component props
-export interface ComponentProps {
+export type ComponentProps = {
   className?: string;
   children?: React.ReactNode;
-}
+};

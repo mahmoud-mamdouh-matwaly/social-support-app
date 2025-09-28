@@ -9,7 +9,7 @@ const Home = () => {
   const navigate = useNavigate();
 
   const handleApplyClick = () => {
-    navigate(PathConstants.APPLY);
+    navigate(PathConstants.APPLY_STEP_1);
   };
 
   return (
