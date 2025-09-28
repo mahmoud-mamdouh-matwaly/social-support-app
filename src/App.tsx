@@ -4,7 +4,7 @@ import { StepperLayout } from "./components/stepper";
 import { PathConstants } from "./constants/paths";
 import { StepValidationProvider } from "./contexts/StepValidationContext";
 import { Layout } from "./layout";
-import { Home, Success } from "./pages";
+import { Home, NotFound, Success } from "./pages";
 import { FamilyFinancialInfo, PersonalInformation, SituationDescriptions } from "./pages/steps";
 
 function App() {
@@ -29,6 +29,9 @@ function App() {
       </Route>
 
       <Route path={PathConstants.SUCCESS} element={<Success />} />
+
+      {/* 404 Not Found - Catch all routes */}
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

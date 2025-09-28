@@ -327,5 +327,12 @@
       "familyFinancialInfo": "Family & Financial Information",
       "situationDescriptions": "Situation Descriptions"
     }
+  },
+  "notFound": {
+    "title": "Page Not Found",
+    "message": "The page you're looking for doesn't exist or has been moved. Please check the URL or navigate back to the homepage.",
+    "goHome": "Go to Homepage",
+    "goBack": "Go Back",
+    "helpText": "If you continue to experience issues, please contact our support team."
   }
 }
