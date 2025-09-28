@@ -9,12 +9,18 @@ function App() {
 
   return (
     <Layout>
-      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 lg:p-8 max-w-4xl mx-auto">
+      <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6 lg:p-8 xl:p-10 max-w-4xl mx-auto">
         <div className="text-center">
-          <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 mb-3 sm:mb-4 lg:mb-6">
+          <h2
+            className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 lg:mb-6 xl:mb-8"
+            id="main-heading"
+          >
             {t("main.welcome")}
           </h2>
-          <p className="text-sm sm:text-base lg:text-lg text-gray-600 leading-relaxed mb-6 sm:mb-8 max-w-2xl mx-auto">
+          <p
+            className="text-sm sm:text-base lg:text-lg xl:text-xl text-gray-600 leading-relaxed mb-6 sm:mb-8 lg:mb-10 max-w-2xl mx-auto"
+            role="doc-abstract"
+          >
             {t("main.description")}
           </p>
 
@@ -28,6 +34,8 @@ function App() {
                 // TODO: Navigate to application form
                 console.log("Navigate to application form");
               }}
+              aria-describedby="main-heading"
+              className="text-base sm:text-lg lg:text-xl px-6 sm:px-8 lg:px-10 py-3 sm:py-4"
             >
               {t("buttons.applyForAssistance")}
             </Button>
