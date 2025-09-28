@@ -36,5 +36,147 @@
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
     "accessibility": "Accessibility"
+  },
+  "stepper": {
+    "title": "Financial Assistance Application",
+    "subtitle": "Complete all steps to submit your application for financial assistance",
+    "navigation": "Application progress navigation",
+    "progressLabel": "Progress: Step {{current}} of {{total}}",
+    "stepCounter": "Step {{current}} of {{total}}",
+    "percentComplete": "{{percent}} percent complete",
+    "complete": "Complete",
+    "mobileProgressLabel": "Application progress",
+    "steps": {
+      "personalInfo": {
+        "title": "Personal Information",
+        "description": "Basic details about you"
+      },
+      "familyFinancial": {
+        "title": "Family & Financial Info",
+        "description": "Family and financial details"
+      },
+      "situation": {
+        "title": "Situation Descriptions",
+        "description": "Describe your situation"
+      }
+    },
+    "stepStatus": {
+      "completed": "Step {{step}}: {{title}} - Completed",
+      "current": "Step {{step}}: {{title}} - Current step",
+      "upcoming": "Step {{step}}: {{title}} - Upcoming step"
+    },
+    "navigation": {
+      "stepNavigation": "Step navigation",
+      "backToHome": "Back to Home",
+      "previous": "Previous Step",
+      "next": "Next Step",
+      "submit": "Submit Application",
+      "previousStep": "Go to previous step",
+      "nextStep": "Go to next step",
+      "submitApplication": "Submit your application"
+    }
+  },
+  "form": {
+    "personalInformation": {
+      "title": "Personal Information",
+      "subtitle": "Please provide your basic personal details",
+      "fields": {
+        "name": {
+          "label": "Full Name",
+          "placeholder": "Enter your full name"
+        },
+        "nationalId": {
+          "label": "National ID",
+          "placeholder": "Enter your national ID"
+        },
+        "dateOfBirth": {
+          "label": "Date of Birth",
+          "placeholder": "Select your date of birth"
+        },
+        "gender": {
+          "label": "Gender",
+          "placeholder": "Select your gender",
+                "options": {
+                  "male": "Male",
+                  "female": "Female"
+                }
+        },
+        "address": {
+          "label": "Address",
+          "placeholder": "Enter your full address"
+        },
+        "city": {
+          "label": "City",
+          "placeholder": "Enter your city"
+        },
+        "state": {
+          "label": "State/Province",
+          "placeholder": "Enter your state or province"
+        },
+        "country": {
+          "label": "Country",
+          "placeholder": "Enter your country"
+        },
+        "phone": {
+          "label": "Phone Number",
+          "placeholder": "+971 XX XXX XXXX or 0X XXX XXXX"
+        },
+        "email": {
+          "label": "Email Address",
+          "placeholder": "Enter your email address"
+        }
+      },
+      "validation": {
+        "required": "This field is required",
+        "invalid": "Please enter a valid value",
+        "name": {
+          "min": "Name must be at least 2 characters",
+          "max": "Name must not exceed 100 characters",
+          "regex": "Name can only contain letters and spaces"
+        },
+        "nationalId": {
+          "min": "National ID must be at least 10 digits",
+          "max": "National ID must not exceed 20 digits",
+          "regex": "National ID can only contain numbers"
+        },
+        "dateOfBirth": {
+          "required": "Date of birth is required",
+          "age": "You must be between 18 and 100 years old"
+        },
+        "gender": {
+          "required": "Please select a gender"
+        },
+        "address": {
+          "min": "Address must be at least 10 characters",
+          "max": "Address must not exceed 200 characters"
+        },
+        "city": {
+          "min": "City must be at least 2 characters",
+          "max": "City must not exceed 50 characters",
+          "regex": "City can only contain letters and spaces"
+        },
+        "state": {
+          "min": "State must be at least 2 characters",
+          "max": "State must not exceed 50 characters",
+          "regex": "State can only contain letters and spaces"
+        },
+        "country": {
+          "min": "Country must be at least 2 characters",
+          "max": "Country must not exceed 50 characters",
+          "regex": "Country can only contain letters and spaces"
+        },
+        "phone": {
+          "required": "Phone number is required",
+          "format": "Please enter a valid phone number (UAE: +971 XX XXX XXXX or 0X XXX XXXX)"
+        },
+        "email": {
+          "required": "Email is required",
+          "invalid": "Please enter a valid email address",
+          "max": "Email must not exceed 100 characters"
+        },
+        "formErrors": "Please fix the errors below before continuing",
+        "saveSuccess": "Information saved successfully"
+      }
+    }
   }
 }
