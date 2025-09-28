@@ -76,20 +76,6 @@ const StepperLayout = () => {
 
   return (
     <div className="max-w-4xl lg:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" dir={isRTL ? "rtl" : "ltr"}>
-      {/* Back to Home */}
-      <div className="mb-4 sm:mb-6">
-        <Button
-          variant="ghost"
-          size="sm"
-          icon={isRTL ? <ArrowRight /> : <ArrowLeft />}
-          iconPosition={isRTL ? "right" : "left"}
-          onClick={handleBackToHome}
-          aria-label={t("stepper.navigation.backToHome")}
-        >
-          {t("stepper.navigation.backToHome")}
-        </Button>
-      </div>
-
       {/* Application Header */}
       <div className="text-center mb-6 sm:mb-8">
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 sm:mb-3">{t("stepper.title")}</h1>
@@ -157,9 +143,19 @@ const StepperLayout = () => {
           ) : (
             <Button
               variant="primary"
-              onClick={() => {
-                // TODO: Handle form submission
-                console.log("Submit application");
+              onClick={async () => {
+                // Map current step to validation step ID
+                const stepIdMap: Record<number, string> = {
+                  1: "personal-information",
+                  2: "family-financial-info",
+                  3: "situation-descriptions",
+                };
+
+                // Validate and submit the final step
+                const stepId = stepIdMap[currentStep];
+                if (stepId) {
+                  await validateStep(stepId);
+                }
               }}
               aria-label={t("stepper.navigation.submitApplication")}
             >

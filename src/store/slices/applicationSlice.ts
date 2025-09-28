@@ -22,7 +22,9 @@ export type FamilyFinancialInfo = {
 };
 
 export type SituationDescriptions = {
-  // Add situation description fields later
+  currentFinancialSituation: string;
+  employmentCircumstances: string;
+  reasonForApplying: string;
 };
 
 export type ApplicationState = {
@@ -53,7 +55,11 @@ const initialState: ApplicationState = {
     monthlyIncome: "",
     housingStatus: "",
   },
-  situationDescriptions: {},
+  situationDescriptions: {
+    currentFinancialSituation: "",
+    employmentCircumstances: "",
+    reasonForApplying: "",
+  },
   currentStep: 1,
   isSubmitting: false,
 };

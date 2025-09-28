@@ -12,11 +12,13 @@
   "common": {
     "actions": {
       "saveAndContinueLater": "Save & Continue Later",
-      "unsavedChanges": "You have unsaved changes"
+      "unsavedChanges": "You have unsaved changes",
+      "close": "Close",
+      "submit": "Submit Application"
     },
     "sections": {
       "contactInformation": "Contact Information",
-      "familyInformation": "Family Information",
+      "familyInformation": "Family Information", 
       "employmentInformation": "Employment Information",
       "housingInformation": "Housing Information"
     }
@@ -257,6 +259,73 @@
         "formErrors": "Please fix the errors below before continuing",
         "saveSuccess": "Information saved successfully"
       }
+    },
+    "situationDescriptions": {
+      "title": "Situation Descriptions",
+      "subtitle": "Please provide detailed descriptions of your current situation to help us better understand your needs.",
+      "fields": {
+        "currentFinancialSituation": {
+          "label": "Current Financial Situation",
+          "placeholder": "Describe your current financial circumstances, including income, expenses, and any financial hardships..."
+        },
+        "employmentCircumstances": {
+          "label": "Employment Circumstances", 
+          "placeholder": "Describe your current employment status, work history, and any challenges you're facing..."
+        },
+        "reasonForApplying": {
+          "label": "Reason for Applying",
+          "placeholder": "Explain why you are applying for financial assistance and how it will help your situation..."
+        }
+      },
+      "validation": {
+        "currentFinancialSituation": {
+          "minLength": "Please provide at least 10 characters for your financial situation",
+          "maxLength": "Description must be less than 1000 characters"
+        },
+        "employmentCircumstances": {
+          "minLength": "Please provide at least 10 characters for your employment circumstances",
+          "maxLength": "Description must be less than 1000 characters"
+        },
+        "reasonForApplying": {
+          "minLength": "Please provide at least 10 characters for your reason for applying",
+          "maxLength": "Description must be less than 1000 characters"
+        },
+        "formErrors": "Please fix the errors above before proceeding",
+        "saveSuccess": "Situation descriptions saved successfully!",
+        "submitSuccess": "Application submitted successfully!",
+        "submitError": "Failed to submit application. Please try again."
+      }
+    }
+  },
+  "aiSuggestion": {
+    "helpMeWrite": "Help Me Write",
+    "title": "AI Writing Assistant - {{field}}",
+    "description": "Here's a suggestion to help you write your description. You can accept it as is, edit it, or discard it.",
+    "generating": "Generating suggestion...",
+    "error": "Error generating suggestion",
+    "accept": "Accept",
+    "edit": "Edit",
+    "discard": "Discard",
+    "editLabel": "Edit the suggestion below:",
+    "saveEdit": "Save Changes"
+  },
+  "success": {
+    "title": "Application Submitted Successfully!",
+    "message": "Thank you for submitting your financial assistance application. We have received your information and will begin processing your request.",
+    "applicationId": "Application ID",
+    "nextSteps": "We will review your application and contact you within 5-7 business days with an update on your application status.",
+    "backToHome": "Back to Home",
+    "downloadReceipt": "Download Receipt",
+    "contactSupport": "Contact Support",
+    "referenceNote": "Please save your Application ID for future reference.",
+    "processingTime": "Processing time: 5-7 business days",
+    "noData": "No application data found. Please submit an application first.",
+    "submittedData": {
+      "title": "Application Summary",
+      "subtitle": "Review the information you submitted with your application",
+      "personalInfo": "Personal Information",
+      "familyFinancialInfo": "Family & Financial Information",
+      "situationDescriptions": "Situation Descriptions"
     }
   }
 }
