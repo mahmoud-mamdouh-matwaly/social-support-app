@@ -327,7 +327,6 @@ graph TD
     L --> M[Application Saved]
     M --> A
     
-    K --> N[Download Receipt]
     K --> O[Email Confirmation]
     K --> P[Track Application Status]
     
