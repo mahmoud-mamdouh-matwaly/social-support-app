@@ -106,18 +106,35 @@ After deployment, you can:
 
 ### Common Issues
 
-1. **404 on refresh**: 
+1. **Lock file not found error**:
+   ```
+   Error: Dependencies lock file is not found
+   ```
+   **Solution**: Generate package-lock.json
+   ```bash
+   npm install --package-lock-only
+   git add package-lock.json
+   git commit -m "Add package-lock.json"
+   git push
+   ```
+
+2. **404 on refresh**: 
    - Add a `404.html` file that redirects to `index.html`
    - Or use hash routing instead of browser routing
 
-2. **Assets not loading**:
+3. **Assets not loading**:
    - Check the `base` path in `vite.config.ts`
    - Ensure it matches your repository name
 
-3. **Build fails**:
+4. **Build fails**:
    - Check TypeScript errors: `npm run build`
    - Fix linting errors: `npm run lint`
    - Ensure all tests pass: `npm test`
+
+5. **GitHub Actions fails**:
+   - Check the Actions tab for detailed error logs
+   - Use the alternative workflow if the main one fails
+   - Ensure all required secrets are set
 
 ### Debug Commands
 ```bash
