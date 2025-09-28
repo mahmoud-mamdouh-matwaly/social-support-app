@@ -327,9 +327,6 @@ graph TD
     L --> M[Application Saved]
     M --> A
     
-    K --> O[Email Confirmation]
-    K --> P[Track Application Status]
-    
     style A fill:#e1f5fe
     style K fill:#e8f5e8
     style F fill:#f3e5f5
