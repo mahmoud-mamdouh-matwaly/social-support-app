@@ -326,11 +326,6 @@ graph TD
     E --> L
     L --> M[Application Saved]
     M --> A
-    
-    style A fill:#e1f5fe
-    style K fill:#e8f5e8
-    style F fill:#f3e5f5
-    style L fill:#fff3e0
 ```
 
 ## 🎯 Key Components
