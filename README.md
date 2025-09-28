@@ -302,7 +302,6 @@ const response = await generateAISuggestion({
 
 ```mermaid
 graph TD
-   flowchart TD
     A[Home Page] --> B[Start Application]
     B --> C[Step 1: Personal Information]
     
