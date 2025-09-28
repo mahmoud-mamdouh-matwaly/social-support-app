@@ -1,11 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Save } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import Button from "../../components/Button";
 import Input from "../../components/Input";
-import SaveContinueLaterButton from "../../components/SaveContinueLaterButton";
 import Select from "../../components/Select";
 import { PathConstants } from "../../constants/paths";
 import { useStepValidation } from "../../contexts/StepValidationContext";
@@ -46,6 +47,7 @@ const FamilyFinancialInfo = () => {
     watch,
     trigger,
     getValues,
+    control,
   } = formMethods;
 
   // Reset form when Redux data changes
@@ -220,16 +222,21 @@ const FamilyFinancialInfo = () => {
               {t("common.sections.familyInformation")}
             </legend>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-              <Select
-                {...register("maritalStatus")}
-                label={t("form.familyFinancialInfo.fields.maritalStatus.label")}
-                placeholder={t("form.familyFinancialInfo.fields.maritalStatus.placeholder")}
-                error={errors.maritalStatus?.message}
-                options={maritalStatusOptions}
-                fullWidth
-                required
-                autoComplete="off"
-                aria-describedby="marital-status-help"
+              <Controller
+                name="maritalStatus"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    label={t("form.familyFinancialInfo.fields.maritalStatus.label")}
+                    placeholder={t("form.familyFinancialInfo.fields.maritalStatus.placeholder")}
+                    error={errors.maritalStatus?.message}
+                    options={maritalStatusOptions}
+                    fullWidth
+                    required
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                )}
               />
 
               <Input
@@ -257,16 +264,21 @@ const FamilyFinancialInfo = () => {
             </legend>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-              <Select
-                {...register("employmentStatus")}
-                label={t("form.familyFinancialInfo.fields.employmentStatus.label")}
-                placeholder={t("form.familyFinancialInfo.fields.employmentStatus.placeholder")}
-                error={errors.employmentStatus?.message}
-                options={employmentStatusOptions}
-                fullWidth
-                required
-                autoComplete="off"
-                aria-describedby="employment-status-help"
+              <Controller
+                name="employmentStatus"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    label={t("form.familyFinancialInfo.fields.employmentStatus.label")}
+                    placeholder={t("form.familyFinancialInfo.fields.employmentStatus.placeholder")}
+                    error={errors.employmentStatus?.message}
+                    options={employmentStatusOptions}
+                    fullWidth
+                    required
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                )}
               />
 
               <Input
@@ -294,23 +306,39 @@ const FamilyFinancialInfo = () => {
             </legend>
 
             <div className="max-w-md">
-              <Select
-                {...register("housingStatus")}
-                label={t("form.familyFinancialInfo.fields.housingStatus.label")}
-                placeholder={t("form.familyFinancialInfo.fields.housingStatus.placeholder")}
-                error={errors.housingStatus?.message}
-                options={housingStatusOptions}
-                fullWidth
-                required
-                autoComplete="off"
-                aria-describedby="housing-status-help"
+              <Controller
+                name="housingStatus"
+                control={control}
+                render={({ field }) => (
+                  <Select
+                    label={t("form.familyFinancialInfo.fields.housingStatus.label")}
+                    placeholder={t("form.familyFinancialInfo.fields.housingStatus.placeholder")}
+                    error={errors.housingStatus?.message}
+                    options={housingStatusOptions}
+                    fullWidth
+                    required
+                    value={field.value}
+                    onChange={field.onChange}
+                  />
+                )}
               />
             </div>
           </fieldset>
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-6 sm:pt-8 border-t border-gray-200">
-            <SaveContinueLaterButton onClick={handleSaveAndContinueLater} disabled={isSubmitting} />
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleSaveAndContinueLater}
+              icon={<Save />}
+              iconPosition={isRTL ? "right" : "left"}
+              disabled={isSubmitting}
+              className="w-full sm:w-auto"
+              aria-label={t("common.actions.saveAndContinueLater")}
+            >
+              {t("common.actions.saveAndContinueLater")}
+            </Button>
           </div>
 
           {/* Form Status */}

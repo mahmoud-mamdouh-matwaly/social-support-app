@@ -75,29 +75,33 @@ const StepperLayout = () => {
   };
 
   return (
-    <div className="max-w-4xl lg:max-w-6xl mx-auto px-4 sm:px-6 lg:px-8" dir={isRTL ? "rtl" : "ltr"}>
+    <div className="max-w-4xl lg:max-w-6xl mx-auto px-2 sm:px-4 lg:px-8" dir={isRTL ? "rtl" : "ltr"}>
       {/* Application Header */}
-      <div className="text-center mb-6 sm:mb-8">
-        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 mb-2 sm:mb-3">{t("stepper.title")}</h1>
-        <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">{t("stepper.subtitle")}</p>
+      <div className="text-center mb-4 sm:mb-6 lg:mb-8">
+        <h1 className="text-xl sm:text-2xl lg:text-3xl xl:text-4xl font-bold text-gray-900 mb-1 sm:mb-2 lg:mb-3">
+          {t("stepper.title")}
+        </h1>
+        <p className="text-sm sm:text-base lg:text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
+          {t("stepper.subtitle")}
+        </p>
       </div>
 
       {/* Stepper */}
-      <Stepper currentStep={currentStep} steps={defaultSteps} className="mb-6 sm:mb-8" />
+      <Stepper currentStep={currentStep} steps={defaultSteps} className="mb-4 sm:mb-6 lg:mb-8" />
 
       {/* Step Content */}
-      <div className="mb-6 sm:mb-8">
+      <div className="mb-4 sm:mb-6 lg:mb-8">
         <Outlet />
       </div>
 
       {/* Navigation Buttons */}
       <nav
-        className={`flex flex-col sm:flex-row justify-between items-center gap-4 py-4 sm:py-6 border-t border-gray-200 ${
+        className={`flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-3 sm:gap-4 py-3 sm:py-4 lg:py-6 border-t border-gray-200 ${
           isRTL ? "sm:flex-row-reverse" : ""
         }`}
         aria-label={t("stepper.navigation.stepNavigation")}
       >
-        <div className={`${isRTL ? "order-1 sm:order-2" : "order-2 sm:order-1"}`}>
+        <div className={`flex justify-center sm:justify-start ${isRTL ? "order-1 sm:order-2" : "order-2 sm:order-1"}`}>
           {currentStep > 1 ? (
             <Button
               variant="outline"
@@ -105,6 +109,7 @@ const StepperLayout = () => {
               icon={isRTL ? <ArrowRight /> : <ArrowLeft />}
               iconPosition={isRTL ? "right" : "left"}
               aria-label={t("stepper.navigation.previousStep")}
+              className="w-full sm:w-auto"
             >
               {t("stepper.navigation.previous")}
             </Button>
@@ -115,6 +120,7 @@ const StepperLayout = () => {
               icon={isRTL ? <ArrowRight /> : <ArrowLeft />}
               iconPosition={isRTL ? "right" : "left"}
               aria-label={t("stepper.navigation.backToHome")}
+              className="w-full sm:w-auto"
             >
               {t("stepper.navigation.backToHome")}
             </Button>
@@ -122,46 +128,50 @@ const StepperLayout = () => {
         </div>
 
         <div
-          className={`flex flex-col sm:flex-row items-center gap-3 sm:gap-4 ${
+          className={`flex flex-col sm:flex-row items-center gap-2 sm:gap-3 lg:gap-4 ${
             isRTL ? "order-2 sm:order-1" : "order-1 sm:order-2"
           }`}
         >
-          <span className="text-sm text-gray-500 font-medium" aria-live="polite" aria-atomic="true">
+          <span className="text-sm text-gray-500 font-medium text-center sm:text-left" aria-live="polite" aria-atomic="true">
             <span dir="ltr">{t("stepper.stepCounter", { current: currentStep, total: totalSteps })}</span>
           </span>
 
-          {currentStep < totalSteps ? (
-            <Button
-              variant="primary"
-              onClick={handleNext}
-              icon={isRTL ? <ArrowLeft /> : <ArrowRight />}
-              iconPosition={isRTL ? "left" : "right"}
-              aria-label={t("stepper.navigation.nextStep")}
-            >
-              {t("stepper.navigation.next")}
-            </Button>
-          ) : (
-            <Button
-              variant="primary"
-              onClick={async () => {
-                // Map current step to validation step ID
-                const stepIdMap: Record<number, string> = {
-                  1: "personal-information",
-                  2: "family-financial-info",
-                  3: "situation-descriptions",
-                };
+          <div className="flex justify-center sm:justify-end w-full sm:w-auto">
+            {currentStep < totalSteps ? (
+              <Button
+                variant="primary"
+                onClick={handleNext}
+                icon={isRTL ? <ArrowLeft /> : <ArrowRight />}
+                iconPosition={isRTL ? "left" : "right"}
+                aria-label={t("stepper.navigation.nextStep")}
+                className="w-full sm:w-auto"
+              >
+                {t("stepper.navigation.next")}
+              </Button>
+            ) : (
+              <Button
+                variant="primary"
+                onClick={async () => {
+                  // Map current step to validation step ID
+                  const stepIdMap: Record<number, string> = {
+                    1: "personal-information",
+                    2: "family-financial-info",
+                    3: "situation-descriptions",
+                  };
 
-                // Validate and submit the final step
-                const stepId = stepIdMap[currentStep];
-                if (stepId) {
-                  await validateStep(stepId);
-                }
-              }}
-              aria-label={t("stepper.navigation.submitApplication")}
-            >
-              {t("stepper.navigation.submit")}
-            </Button>
-          )}
+                  // Validate and submit the final step
+                  const stepId = stepIdMap[currentStep];
+                  if (stepId) {
+                    await validateStep(stepId);
+                  }
+                }}
+                aria-label={t("stepper.navigation.submitApplication")}
+                className="w-full sm:w-auto"
+              >
+                {t("stepper.navigation.submit")}
+              </Button>
+            )}
+          </div>
         </div>
       </nav>
     </div>

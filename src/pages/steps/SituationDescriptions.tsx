@@ -1,12 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Save } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import AISuggestionModal from "../../components/AISuggestionModal";
+import Button from "../../components/Button";
 import HelpMeWriteButton from "../../components/HelpMeWriteButton";
-import SaveContinueLaterButton from "../../components/SaveContinueLaterButton";
 import Textarea from "../../components/Textarea";
 import { PathConstants } from "../../constants/paths";
 import { useStepValidation } from "../../contexts/StepValidationContext";
@@ -402,7 +403,18 @@ const SituationDescriptions = () => {
 
           {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row justify-center items-center gap-4 pt-6 sm:pt-8 border-t border-gray-200">
-            <SaveContinueLaterButton onClick={handleSaveAndContinueLater} disabled={isSubmitting} />
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleSaveAndContinueLater}
+              icon={<Save />}
+              iconPosition={isRTL ? "right" : "left"}
+              disabled={isSubmitting}
+              className="w-full sm:w-auto"
+              aria-label={t("common.actions.saveAndContinueLater")}
+            >
+              {t("common.actions.saveAndContinueLater")}
+            </Button>
           </div>
 
           {/* Form Status */}

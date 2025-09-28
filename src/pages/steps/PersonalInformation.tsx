@@ -1,12 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Save } from "lucide-react";
 import { useEffect, useMemo, useRef } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import toast, { Toaster } from "react-hot-toast";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import Button from "../../components/Button";
 import CountrySelect from "../../components/CountrySelect";
 import Input from "../../components/Input";
-import SaveContinueLaterButton from "../../components/SaveContinueLaterButton";
 import Select from "../../components/Select";
 import { PathConstants } from "../../constants/paths";
 import { useStepValidation } from "../../contexts/StepValidationContext";
@@ -53,6 +54,7 @@ const PersonalInformation = () => {
     trigger,
     setValue,
     getValues,
+    control,
   } = formMethods;
 
   // Reset form when Redux data changes
@@ -215,14 +217,21 @@ const PersonalInformation = () => {
               autoComplete="bday"
             />
 
-            <Select
-              {...register("gender")}
-              label={t("form.personalInformation.fields.gender.label")}
-              placeholder={t("form.personalInformation.fields.gender.placeholder")}
-              options={genderOptions}
-              error={errors.gender?.message}
-              fullWidth
-              required
+            <Controller
+              name="gender"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label={t("form.personalInformation.fields.gender.label")}
+                  placeholder={t("form.personalInformation.fields.gender.placeholder")}
+                  options={genderOptions}
+                  error={errors.gender?.message}
+                  fullWidth
+                  required
+                  value={field.value}
+                  onChange={field.onChange}
+                />
+              )}
             />
           </div>
 
@@ -314,7 +323,18 @@ const PersonalInformation = () => {
 
           {/* Action Buttons */}
           <div className={`flex justify-center pt-6 border-t`}>
-            <SaveContinueLaterButton onClick={handleSaveAndContinueLater} disabled={isSubmitting} />
+            <Button
+              type="button"
+              variant="outline"
+              onClick={handleSaveAndContinueLater}
+              icon={<Save />}
+              iconPosition={isRTL ? "right" : "left"}
+              disabled={isSubmitting}
+              className="w-full sm:w-auto"
+              aria-label={t("common.actions.saveAndContinueLater")}
+            >
+              {t("common.actions.saveAndContinueLater")}
+            </Button>
           </div>
 
           {/* Form Status */}
