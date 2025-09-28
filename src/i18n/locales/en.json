@@ -1,0 +1,40 @@
+{
+  "header": {
+    "title": "Social Support Portal",
+    "subtitle": "Financial Assistance Application",
+    "signIn": "Sign In",
+    "language": "EN"
+  },
+  "main": {
+    "welcome": "Welcome to the Financial Assistance Portal",
+    "description": "Apply for financial assistance and track your application status."
+  },
+  "accessibility": {
+    "skipToMain": "Skip to main content",
+    "switchToArabic": "Switch to Arabic",
+    "switchToEnglish": "Switch to English"
+  },
+  "buttons": {
+    "applyNow": "Apply Now",
+    "applyForAssistance": "Apply for Financial Assistance",
+    "getStarted": "Get Started",
+    "learnMore": "Learn More",
+    "loading": "Loading..."
+  },
+  "footer": {
+    "description": "Providing financial assistance and support services to help individuals and families in need.",
+    "quickLinks": "Quick Links",
+    "howToApply": "How to Apply",
+    "eligibility": "Eligibility Requirements",
+    "faq": "Frequently Asked Questions",
+    "contact": "Contact Support",
+    "contactUs": "Contact Us",
+    "phone": "Phone",
+    "email": "Email",
+    "businessHours": "Monday - Friday, 8:00 AM - 6:00 PM",
+    "allRightsReserved": "All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "accessibility": "Accessibility"
+  }
+}
