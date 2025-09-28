@@ -4,7 +4,7 @@ import { StepperLayout } from "./components/stepper";
 import { PathConstants } from "./constants/paths";
 import { StepValidationProvider } from "./contexts/StepValidationContext";
 import { Layout } from "./layout";
-import { Home } from "./pages";
+import { Home, Success } from "./pages";
 import { FamilyFinancialInfo, PersonalInformation, SituationDescriptions } from "./pages/steps";
 
 function App() {
@@ -27,6 +27,9 @@ function App() {
           <Route path={PathConstants.APPLY_STEP_3} element={<SituationDescriptions />} />
         </Route>
       </Route>
+
+      {/* Success Page - Standalone */}
+      <Route path={PathConstants.SUCCESS} element={<Success />} />
     </Routes>
   );
 }
