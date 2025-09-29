@@ -39,6 +39,9 @@ jobs:
         env:
           VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
           VITE_OPENAI_API_KEY: ${{ secrets.VITE_OPENAI_API_KEY }}
+          VITE_OPENAI_MAX_TOKENS: ${{ secrets.VITE_OPENAI_MAX_TOKENS }}
+          VITE_OPENAI_MODEL: ${{ secrets.VITE_OPENAI_MODEL }}
+          VITE_OPENAI_MAX_RETRIES: ${{ secrets.VITE_OPENAI_MAX_RETRIES }}
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
