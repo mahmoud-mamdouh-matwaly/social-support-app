@@ -12,9 +12,11 @@ import Textarea from "../../components/Textarea";
 import { PathConstants } from "../../constants/paths";
 import { useStepValidation } from "../../contexts/StepValidationContext";
 import { createSituationDescriptionsSchema, type SituationDescriptionsFormData } from "../../schemas/situationDescriptions";
-import { generateAISuggestion, type OpenAIRequest } from "../../services/openai";
+import { generateAISuggestion, type FormDataContext, type OpenAIRequest } from "../../services/openai";
+import type { RootState } from "../../store";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { resetApplication, setSubmitting, updateSituationDescriptions } from "../../store/slices/applicationSlice";
+import { getAdditionalErrorMessage, getUnexpectedErrorMessage } from "../../utils/errorHandling";
 import { saveApplicationToLocalStorage } from "../../utils/localStorage";
 
 const SituationDescriptions = () => {
@@ -25,8 +27,10 @@ const SituationDescriptions = () => {
   const isRTL = i18n.language === "ar";
 
   // Get existing data from Redux store
-  const { personalInformation, familyFinancialInfo, situationDescriptions } = useAppSelector((state) => state.application);
-  const isSubmitting = useAppSelector((state) => state.application.isSubmitting);
+  const { personalInformation, familyFinancialInfo, situationDescriptions } = useAppSelector(
+    (state: RootState) => state.application
+  );
+  const isSubmitting = useAppSelector((state: RootState) => state.application.isSubmitting);
 
   // Create schema with translated messages (recreated when language changes)
   const situationDescriptionsSchema = useMemo(() => createSituationDescriptionsSchema(t), [t]);
@@ -198,9 +202,29 @@ const SituationDescriptions = () => {
     });
 
     try {
+      // Get current form values and existing data
+      const currentFormData = watch();
+      const currentFieldValue = currentFormData[fieldType];
+
+      // Build form data context for AI
+      const formDataContext: FormDataContext = {
+        familyFinancialInfo: {
+          maritalStatus: familyFinancialInfo.maritalStatus,
+          dependents: familyFinancialInfo.dependents,
+          employmentStatus: familyFinancialInfo.employmentStatus,
+          monthlyIncome: familyFinancialInfo.monthlyIncome,
+          housingStatus: familyFinancialInfo.housingStatus,
+        },
+        personalInformation: {
+          location: `${personalInformation.city}, ${personalInformation.country}`.replace(/^, |, $/g, ""),
+        },
+        existingText: currentFieldValue || "",
+      };
+
       const request: OpenAIRequest = {
         fieldType,
         language: i18n.language,
+        formData: formDataContext,
       };
 
       const response = await generateAISuggestion(request);
@@ -212,17 +236,25 @@ const SituationDescriptions = () => {
           suggestion: response.suggestion,
         }));
       } else {
+        // Handle different error types with appropriate user feedback
+        let errorMessage = response.error || t("aiSuggestion.defaultError", "Failed to generate suggestion");
+
+        // Add contextual messages based on error type and language
+        if (response.errorType) {
+          errorMessage += getAdditionalErrorMessage(response.errorType, i18n.language, response.retryAfter);
+        }
+
         setAiModalState((prev) => ({
           ...prev,
           isLoading: false,
-          error: response.error || "Failed to generate suggestion",
+          error: errorMessage,
         }));
       }
     } catch (error) {
       setAiModalState((prev) => ({
         ...prev,
         isLoading: false,
-        error: "Network error. Please try again.",
+        error: getUnexpectedErrorMessage(i18n.language),
       }));
     }
   };

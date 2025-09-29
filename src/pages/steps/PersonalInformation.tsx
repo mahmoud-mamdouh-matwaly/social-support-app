@@ -252,6 +252,21 @@ const PersonalInformation = () => {
             />
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="md:col-span-2">
+                <CountrySelect
+                  name="country"
+                  value={watch("country")}
+                  onChange={(value) => {
+                    setValue("country", value, { shouldValidate: true, shouldDirty: true });
+                  }}
+                  label={t("form.personalInformation.fields.country.label")}
+                  placeholder={t("form.personalInformation.fields.country.placeholder")}
+                  error={errors.country?.message}
+                  fullWidth
+                  required
+                />
+              </div>
+
               <Input
                 {...register("city")}
                 label={t("form.personalInformation.fields.city.label")}
@@ -271,21 +286,6 @@ const PersonalInformation = () => {
                 required
                 autoComplete="address-level1"
               />
-
-              <div className="md:col-span-2">
-                <CountrySelect
-                  name="country"
-                  value={watch("country")}
-                  onChange={(value) => {
-                    setValue("country", value, { shouldValidate: true, shouldDirty: true });
-                  }}
-                  label={t("form.personalInformation.fields.country.label")}
-                  placeholder={t("form.personalInformation.fields.country.placeholder")}
-                  error={errors.country?.message}
-                  fullWidth
-                  required
-                />
-              </div>
             </div>
           </div>
 

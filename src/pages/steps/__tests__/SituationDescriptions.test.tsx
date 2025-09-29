@@ -521,8 +521,13 @@ describe("SituationDescriptions Component", () => {
     const user = userEvent.setup();
     const { generateAISuggestion } = await import("../../../services/openai");
 
-    // Mock network error
-    (generateAISuggestion as MockedFunction<typeof generateAISuggestion>).mockRejectedValue(new Error("Network error"));
+    // Mock network error response
+    (generateAISuggestion as MockedFunction<typeof generateAISuggestion>).mockResolvedValue({
+      success: false,
+      error: "Connection error. Please check your internet and try again.",
+      errorType: "network",
+      suggestion: "",
+    });
 
     renderWithProviders(<SituationDescriptions />);
 
@@ -531,7 +536,9 @@ describe("SituationDescriptions Component", () => {
 
     // Wait for error to appear
     await waitFor(() => {
-      expect(screen.getByTestId("modal-error")).toHaveTextContent("Network error. Please try again.");
+      expect(screen.getByTestId("modal-error")).toHaveTextContent(
+        "Connection error. Please check your internet and try again. Please check your internet connection."
+      );
     });
   });
 
