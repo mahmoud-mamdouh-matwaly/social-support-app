@@ -338,7 +338,7 @@ const SituationDescriptions = () => {
         >
           {/* Current Financial Situation */}
           <div className="space-y-2">
-            <div className={`flex items-start justify-between gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
+            <div className={`flex items-start justify-between gap-3`}>
               <div className="flex-1">
                 <label
                   htmlFor="currentFinancialSituation"
@@ -371,7 +371,7 @@ const SituationDescriptions = () => {
 
           {/* Employment Circumstances */}
           <div className="space-y-2">
-            <div className={`flex items-start justify-between gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
+            <div className={`flex items-start justify-between gap-3`}>
               <div className="flex-1">
                 <label
                   htmlFor="employmentCircumstances"
@@ -404,7 +404,7 @@ const SituationDescriptions = () => {
 
           {/* Reason for Applying */}
           <div className="space-y-2">
-            <div className={`flex items-start justify-between gap-3 ${isRTL ? "flex-row-reverse" : ""}`}>
+            <div className={`flex items-start justify-between gap-3`}>
               <div className="flex-1">
                 <label
                   htmlFor="reasonForApplying"
