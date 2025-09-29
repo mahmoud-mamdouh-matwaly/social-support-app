@@ -42,7 +42,7 @@ const SituationDescriptions = () => {
       employmentCircumstances: situationDescriptions.employmentCircumstances || "",
       reasonForApplying: situationDescriptions.reasonForApplying || "",
     },
-    mode: "onSubmit",
+    mode: "onChange", // Validate on change to clear errors when valid
   });
 
   const {
@@ -54,6 +54,29 @@ const SituationDescriptions = () => {
     getValues,
     setValue,
   } = formMethods;
+
+  // Track previous language to detect changes and re-validate
+  const prevLanguageRef = useRef(i18n.language);
+
+  useEffect(() => {
+    const currentLanguage = i18n.language;
+
+    // If language changed and there are existing errors, re-validate to get translated messages
+    if (prevLanguageRef.current !== currentLanguage) {
+      prevLanguageRef.current = currentLanguage;
+
+      // Clear errors first
+      formMethods.clearErrors();
+
+      // Re-validate if form has been touched and has errors
+      const hasErrors = Object.keys(formMethods.formState.errors).length > 0;
+      if (hasErrors || formMethods.formState.isSubmitted) {
+        setTimeout(() => {
+          trigger();
+        }, 50); // Small delay to ensure schema is updated
+      }
+    }
+  }, [i18n.language, formMethods, trigger]);
 
   // AI suggestion modal state
   const [aiModalState, setAiModalState] = useState<{
@@ -69,27 +92,6 @@ const SituationDescriptions = () => {
     suggestion: "",
     fieldLabel: "",
   });
-
-  // Track previous language to detect changes
-  const prevLanguageRef = useRef(i18n.language);
-
-  // Update validation messages when language changes
-  useEffect(() => {
-    const currentLanguage = i18n.language;
-
-    // Only trigger if language actually changed and form has been interacted with
-    if (prevLanguageRef.current !== currentLanguage && isDirty) {
-      prevLanguageRef.current = currentLanguage;
-
-      // Clear errors first, then re-validate with new language
-      formMethods.clearErrors();
-      setTimeout(() => {
-        trigger();
-      }, 10); // Small delay to ensure errors are cleared
-    } else {
-      prevLanguageRef.current = currentLanguage;
-    }
-  }, [i18n.language, isDirty, formMethods, trigger]);
 
   // Reset form when Redux data changes
   useEffect(() => {
