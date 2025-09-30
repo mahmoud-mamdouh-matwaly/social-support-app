@@ -36,7 +36,7 @@
 
 - Keep the API key isolated and never send it to the client.
 
-### 7. Use Next.js with API Routes or Server-Side Rendering (SSR)
+### 3. Use Next.js with API Routes or Server-Side Rendering (SSR)
 
 💡 Recommended for fullstack React apps.
 
@@ -49,3 +49,27 @@
   - Use Server-side Rendering (SSR) or Incremental Static Regeneration (ISR) to securely generate responses using OpenAI on the server side.
 
 - Hosted easily on Vercel with built-in support for secure env vars and serverless functions.
+
+
+ ### Save as Draft & Data Persistence
+
+ **Overview**
+
+  The "Save as Draft" functionality allows users to save their current progress in a multi-step form or process so they can return later and continue without losing any data. This is especially useful in longer workflows such as:
+
+   - Applications
+
+   - Onboarding forms
+
+   - Multi-step wizards
+
+
+  ** Workflow Summary **
+
+   - User fills out the form.
+
+   - Clicks "Save & Continue Later" or a background auto-save is triggered.
+
+   - Data is sent to the backend and stored as a draft.
+
+   - On return or refresh, the frontend fetches saved data from the backend to restore progress.
