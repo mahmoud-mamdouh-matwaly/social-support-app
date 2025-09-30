@@ -1,10 +1,10 @@
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import React from "react";
+import { useCallback, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
 import { PathConstants } from "../../constants/paths";
 import { useStepValidation } from "../../contexts/StepValidationContext";
-import { useAppDispatch } from "../../store/hooks";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { setCurrentStep } from "../../store/slices/applicationSlice";
 import Button from "../Button";
 import Stepper from "./Stepper";
@@ -17,6 +17,9 @@ const StepperLayout = () => {
   const dispatch = useAppDispatch();
   const { validateStep } = useStepValidation();
   const isRTL = i18n.language === "ar";
+
+  // Get application data from Redux store
+  const applicationData = useAppSelector((state) => state.application);
 
   // Map paths to step numbers
   const pathToStep: Record<string, number> = {
@@ -35,8 +38,38 @@ const StepperLayout = () => {
   const currentStep = pathToStep[location.pathname] || 1;
   const totalSteps = defaultSteps.length;
 
+  // Helper function to check if there's any meaningful data in the application
+  const hasApplicationData = useCallback(() => {
+    const { personalInformation, familyFinancialInfo, situationDescriptions } = applicationData;
+
+    // Check if any field in personal information has data
+    const hasPersonalData = Object.values(personalInformation).some((value) => value.trim() !== "");
+
+    // Check if any field in family financial info has data
+    const hasFamilyData = Object.values(familyFinancialInfo).some((value) => value.trim() !== "");
+
+    // Check if any field in situation descriptions has data
+    const hasSituationData = Object.values(situationDescriptions).some((value) => value.trim() !== "");
+
+    return hasPersonalData || hasFamilyData || hasSituationData;
+  }, [applicationData]);
+
+  // Redirect to first step on page refresh/mount if no data exists
+  useEffect(() => {
+    // Check if we're on any stepper route
+    const stepperRoutes: string[] = [PathConstants.APPLY_STEP_1, PathConstants.APPLY_STEP_2, PathConstants.APPLY_STEP_3];
+
+    if (stepperRoutes.includes(location.pathname)) {
+      // If we're not on step 1 and there's no application data, redirect to step 1
+      const hasData = !hasApplicationData();
+      if (location.pathname !== PathConstants.APPLY_STEP_1 && !hasData) {
+        navigate(PathConstants.APPLY_STEP_1, { replace: true });
+      }
+    }
+  }, [location.pathname, applicationData, navigate, hasApplicationData]);
+
   // Update Redux store when step changes
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(setCurrentStep(currentStep));
   }, [currentStep, dispatch]);
 
