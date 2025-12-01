@@ -129,8 +129,10 @@ const SituationDescriptions = () => {
       toast.success(t("form.situationDescriptions.validation.submitSuccess"));
 
       // Reset application and navigate to success page
-      dispatch(resetApplication());
-      navigate(PathConstants.SUCCESS);
+      navigate(PathConstants.SUCCESS, { replace: true });
+      setTimeout(() => {
+        dispatch(resetApplication());
+      }, 100);
     } catch {
       toast.error(t("form.situationDescriptions.validation.submitError"));
     } finally {

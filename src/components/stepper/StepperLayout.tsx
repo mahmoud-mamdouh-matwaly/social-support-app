@@ -53,16 +53,19 @@ const StepperLayout = () => {
 
     return hasPersonalData || hasFamilyData || hasSituationData;
   }, [applicationData]);
-
   // Redirect to first step on page refresh/mount if no data exists
   useEffect(() => {
+    // Don't redirect if we're navigating to success or home pages
+    if (location.pathname === PathConstants.SUCCESS || location.pathname === PathConstants.HOME) {
+      return;
+    }
+
     // Check if we're on any stepper route
     const stepperRoutes: string[] = [PathConstants.APPLY_STEP_1, PathConstants.APPLY_STEP_2, PathConstants.APPLY_STEP_3];
 
     if (stepperRoutes.includes(location.pathname)) {
-      // If we're not on step 1 and there's no application data, redirect to step 1
       const hasData = !hasApplicationData();
-      if (location.pathname !== PathConstants.APPLY_STEP_1 && !hasData) {
+      if (location.pathname !== PathConstants.APPLY_STEP_1 && hasData) {
         navigate(PathConstants.APPLY_STEP_1, { replace: true });
       }
     }

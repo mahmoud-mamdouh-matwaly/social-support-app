@@ -759,7 +759,7 @@ describe("SituationDescriptions Component", () => {
     // Check success toast and navigation
     await waitFor(() => {
       expect(toast.default.success).toHaveBeenCalledWith("Application submitted successfully");
-      expect(mockNavigate).toHaveBeenCalledWith("/success");
+      expect(mockNavigate).toHaveBeenCalledWith("/success", { replace: true });
     });
   });
 
