@@ -26,9 +26,8 @@ function App() {
           <Route path={PathConstants.APPLY_STEP_2} element={<FamilyFinancialInfo />} />
           <Route path={PathConstants.APPLY_STEP_3} element={<SituationDescriptions />} />
         </Route>
+        <Route path={PathConstants.SUCCESS} element={<Success />} />
       </Route>
-
-      <Route path={PathConstants.SUCCESS} element={<Success />} />
 
       {/* 404 Not Found - Catch all routes */}
       <Route path="*" element={<NotFound />} />
